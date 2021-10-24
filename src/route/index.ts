@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-25 00:30:58 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-25 03:07:48 +0800
+ * @LastEditTime: 2021-10-25 03:47:17 +0800
  * @LastEditors : JackChou
  */
 import { Router, Request, Response } from 'express'
@@ -56,17 +56,24 @@ router.post('/login', (req: RequestWithBody, res) => {
 router.get('/movies/:id?', (req: Request<{ id: number }>, res: Response) => {
   const filePath = path.resolve(__dirname, '../../data/playing.json')
   const { id } = req.params
-  console.log(req.query)
+  console.log(req.query, req.params)
   if (fs.existsSync(filePath)) {
     const json = fs.readFileSync(filePath, 'utf-8')
     const data = JSON.parse(json)
     const queryKeys = Object.keys(req.query)
-    if (queryKeys.length) {
+    if (queryKeys.length && !id) {
       // @ts-ignore
       const filteredData = filterData(queryKeys, data, req.query)
       res.send(filteredData)
     } else {
-      res.send(id ? data[id] : data)
+      // FIXME 返回啥 204 vs 404
+      const result = id ? data[id] : data
+      if (!result) {
+        res.sendStatus(404)
+        // res.send()
+      } else {
+        res.send(result)
+      }
     }
   } else {
     res.send([])
