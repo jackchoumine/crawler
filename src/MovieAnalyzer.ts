@@ -2,15 +2,22 @@
  * @Description : 提取电影信息
  * @Date        : 2021-10-24 19:17:34 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-24 19:43:40 +0800
+ * @LastEditTime: 2021-10-24 20:05:05 +0800
  * @LastEditors : JackChou
  */
 import * as cheerio from 'cheerio'
 import fs from 'fs'
 import { Movie } from './types'
+export interface IAnalyzer {
+  analyze: (html: string, filePath: string) => Movie[]
+}
+export default class MovieAnalyzer implements IAnalyzer {
+  analyze(htmlCode: string, dataFilepath: string) {
+    const movies = this.getMovieInfo(htmlCode)
+    return this.generateMovieList(movies, dataFilepath)
+  }
 
-export default class MovieAnalyzer {
-  getMovieInfo(htmlCode: string, dataFilepath: string): Movie[] {
+  private getMovieInfo(htmlCode: string): Movie[] {
     const $ = cheerio.load(htmlCode)
     const playing = $('#nowplaying')
     const list = playing.find('.lists')
@@ -21,8 +28,7 @@ export default class MovieAnalyzer {
       const movie = cheerioObj.data()
       movieList.push({ poster: poster, ...movie })
     })
-
-    return this.generateMovieList(movieList, dataFilepath)
+    return movieList
   }
 
   private generateMovieList(movies: Movie[], oldFilepath: string) {
