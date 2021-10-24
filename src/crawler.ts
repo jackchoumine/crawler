@@ -2,7 +2,7 @@
  * @Description : 爬虫类
  * @Date        : 2021-10-24 17:11:43 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-24 19:44:03 +0800
+ * @LastEditTime: 2021-10-24 19:50:24 +0800
  * @LastEditors : JackChou
  */
 import * as superagent from 'superagent'
@@ -11,10 +11,7 @@ import fs from 'fs'
 import { Movie } from './types'
 import MovieAnalyzer from './MovieAnalyzer'
 class Crawler {
-  private url = 'https://movie.douban.com/cinema/nowplaying/chengdu/'
-  private filepath = path.resolve(__dirname, '../data/playing.json')
-
-  constructor(private analyzer: any) {
+  constructor(private url: string, private analyzer: any, private filepath: string) {
     this.initSpider()
   }
 
@@ -35,4 +32,8 @@ class Crawler {
   }
 }
 const movieAnalyzer = new MovieAnalyzer()
-const crawler = new Crawler(movieAnalyzer)
+
+const url = 'https://movie.douban.com/cinema/nowplaying/chengdu/'
+const filepath = path.join(__dirname, '../data/playing.json')
+
+const crawler = new Crawler(url, movieAnalyzer, filepath)
