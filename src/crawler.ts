@@ -2,7 +2,7 @@
  * @Description : 爬虫类
  * @Date        : 2021-10-24 17:11:43 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-24 20:21:53 +0800
+ * @LastEditTime: 2021-10-24 21:56:51 +0800
  * @LastEditors : JackChou
  */
 import * as superagent from 'superagent'
@@ -35,4 +35,4 @@ const movieAnalyzer = MovieAnalyzer.getInstance()
 const url = 'https://movie.douban.com/cinema/nowplaying/chengdu/'
 const filepath = path.join(__dirname, '../data/playing.json')
 
-const crawler = new Crawler(url, movieAnalyzer, filepath)
+new Crawler(url, movieAnalyzer, filepath)
