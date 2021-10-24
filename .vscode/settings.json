@@ -1,0 +1,12 @@
+{
+  "cSpell.words": [
+    "concurrenty",
+    "nowplaying",
+    "votecount"
+  ],
+  "files.exclude": {
+    "**/*.js":false,
+    "**/node_modules": true,
+    "**/*.tsbuildinfo": true
+  },
+}
