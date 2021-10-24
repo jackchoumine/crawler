@@ -2,12 +2,15 @@
  * @Description :
  * @Date        : 2021-10-25 00:04:12 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-25 01:47:30 +0800
+ * @LastEditTime: 2021-10-25 02:19:30 +0800
  * @LastEditors : JackChou
  */
 import express, { NextFunction, Request, Response } from 'express'
 import router from './route'
-// import bodyParser from 'body-parser'
+import cookieSession from 'cookie-session'
+const PORT = 3000
+const ONE_DAY = 1000 * 60 * 60 * 24
+
 const app = express()
 app.use(express.urlencoded({ extended: false }))
 app.use((req: Request, res, next: NextFunction) => {
@@ -15,8 +18,18 @@ app.use((req: Request, res, next: NextFunction) => {
   req.name = 'Jack'
   next()
 })
+
+// FIXME: 如何使用?
+app.use(
+  cookieSession({
+    name: 'session',
+    keys: ['key1', 'key2'],
+    maxAge: ONE_DAY,
+  })
+)
+
 app.use(router)
 
-app.listen(3000, () => {
-  console.log('server is running at port 3000')
+app.listen(PORT, () => {
+  console.log(`server is running at port ${PORT}`)
 })
