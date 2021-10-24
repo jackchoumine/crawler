@@ -4,9 +4,8 @@
   "description": "ts 爬虫",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node ./src/crawler.ts",
     "build": "tsc -w",
-    "run": "nodemon node ./dist/crawler.js"
+    "start": "nodemon node ./dist/crawler.js"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",
