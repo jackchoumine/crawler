@@ -4,8 +4,9 @@
   "description": "ts 爬虫",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -w",
-    "start": "nodemon node ./dist/crawler.js"
+    "dev:build": "tsc -w",
+    "dev:start": "nodemon node ./dist/crawler.js",
+    "dev":"concurrently npm:dev:*"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",
@@ -14,6 +15,7 @@
   "devDependencies": {
     "@types/cheerio": "^0.22.30",
     "@types/superagent": "^4.1.13",
+    "concurrently": "^6.3.0",
     "nodemon": "^2.0.14",
     "ts-node": "^10.4.0",
     "typescript": "^4.4.4"
