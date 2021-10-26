@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-26 21:36:17 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-27 01:37:27 +0800
+ * @LastEditTime: 2021-10-27 01:47:38 +0800
  * @LastEditors : JackChou
  */
 import { RequestHandler } from 'express'
@@ -45,10 +45,12 @@ export function controller(root: string = '') {
 export function use(middleware: RequestHandler) {
   return function (constructor: any, methodName: string, descriptor: PropertyDescriptor) {
     // FIXME:有点复杂
-    const originalMiddlewares = Reflect.getMetadata('middlewares', constructor, methodName) || []
-    originalMiddlewares.push(middleware)
+    const originalMiddlewares: RequestHandler[] = Reflect.getMetadata('middlewares', constructor, methodName) || []
+    // NOTE 方法装饰器从下到上，从右到左执行
+    // unshift 保证下面的中间件在后面，处理路由时后执行
+    // 这样可使得书写顺序和执行顺序一致
+    originalMiddlewares.unshift(middleware)
     Reflect.defineMetadata('middlewares', originalMiddlewares, constructor, methodName)
-    // Reflect.defineMetadata('middlewares', middleware, constructor, methodName)
   }
 }
 
