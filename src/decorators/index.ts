@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-26 21:36:17 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-27 01:26:54 +0800
+ * @LastEditTime: 2021-10-27 01:37:27 +0800
  * @LastEditors : JackChou
  */
 import { RequestHandler } from 'express'
@@ -25,16 +25,16 @@ export function controller(root: string = '') {
       const path: string = Reflect.getMetadata('path', prototype, key)
       const _path = `${root}${path}`
       const method: Method = Reflect.getMetadata('method', prototype, key)
-      const middleware: RequestHandler | undefined = Reflect.getMetadata('middleware', prototype, key)
+      const middlewares: RequestHandler[] = Reflect.getMetadata('middlewares', prototype, key) || []
       console.log(_path)
       console.log(method)
-      console.log(middleware)
+      console.log(middlewares)
 
       const handler: RequestHandler = prototype[key]
-      if (middleware && path && method && isFunction(handler)) {
+      if (path && method && isFunction(handler)) {
         // NOTE 将 method 声明为 Method 类型，不再报错
         // WHY
-        router[method](_path, middleware, handler)
+        router[method](_path, ...middlewares, handler)
       } else {
         router[method](_path, handler)
       }
@@ -44,7 +44,11 @@ export function controller(root: string = '') {
 
 export function use(middleware: RequestHandler) {
   return function (constructor: any, methodName: string, descriptor: PropertyDescriptor) {
-    Reflect.defineMetadata('middleware', middleware, constructor, methodName)
+    // FIXME:有点复杂
+    const originalMiddlewares = Reflect.getMetadata('middlewares', constructor, methodName) || []
+    originalMiddlewares.push(middleware)
+    Reflect.defineMetadata('middlewares', originalMiddlewares, constructor, methodName)
+    // Reflect.defineMetadata('middlewares', middleware, constructor, methodName)
   }
 }
 
