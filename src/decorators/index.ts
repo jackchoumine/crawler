@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-26 21:36:17 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-27 00:43:45 +0800
+ * @LastEditTime: 2021-10-27 01:23:12 +0800
  * @LastEditors : JackChou
  */
 import { RequestHandler } from 'express'
@@ -10,39 +10,36 @@ import { isFunction } from '../utils'
 // FIXME 编译后无法识别路径别名
 // import { isFunction } from '@utils/index'
 import router from '../route'
+// FIXME 如何声明全局类型
+type Controller = new (...args: any[]) => unknown
 
 enum Method {
   get = 'get',
   post = 'post',
 }
+export function controller(prefixPath: string = '') {
+  return function (constructor: Controller) {
+    const prototype = constructor.prototype
 
-export function controller(constructor: any) {
-  const prototype = constructor.prototype
+    Object.keys(prototype).forEach(key => {
+      const path: string = Reflect.getMetadata('path', prototype, key)
+      const _path = `${prefixPath}${path}`
+      const method: Method = Reflect.getMetadata('method', prototype, key)
+      const middleware: RequestHandler | undefined = Reflect.getMetadata('middleware', prototype, key)
+      console.log(_path)
+      console.log(method)
+      console.log(middleware)
 
-  Object.keys(prototype).forEach(key => {
-    const path = Reflect.getMetadata('path', prototype, key)
-    const method: Method = Reflect.getMetadata('method', prototype, key)
-    const middleware = Reflect.getMetadata('middleware', prototype, key)
-    console.log(path)
-    console.log(method)
-    console.log(middleware)
-
-    const handler = prototype[key]
-    if (middleware && path && method && isFunction(handler)) {
-      // NOTE 将 method 声明为 Method 类型，不再报错
-      // WHY
-      router[method](path, middleware, handler)
-    } else {
-      router[method](path, handler)
-    }
-  })
-
-  // for (const key in prototype) {
-  //   const path = Reflect.getMetadata('path', prototype, key)
-  //   if (path) {
-  //     router.get(path, prototype[key])
-  //   }
-  // }
+      const handler: RequestHandler = prototype[key]
+      if (middleware && path && method && isFunction(handler)) {
+        // NOTE 将 method 声明为 Method 类型，不再报错
+        // WHY
+        router[method](_path, middleware, handler)
+      } else {
+        router[method](_path, handler)
+      }
+    })
+  }
 }
 
 export function use(middleware: RequestHandler) {

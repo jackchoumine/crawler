@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-26 22:51:06 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-27 00:27:48 +0800
+ * @LastEditTime: 2021-10-27 01:09:34 +0800
  * @LastEditors : JackChou
  */
 import path from 'path'
@@ -11,7 +11,7 @@ import { NextFunction, Request, Response } from 'express'
 import { controller, get, post, use } from '../decorators'
 import { Movie } from '../types'
 
-@controller
+@controller()
 class MovieController {
   @get('/movies/:id?')
   getMovies(req: Request<{ id: number }>, res: Response) {

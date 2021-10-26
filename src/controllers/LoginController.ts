@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-26 21:11:55 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-27 00:43:58 +0800
+ * @LastEditTime: 2021-10-27 01:10:50 +0800
  * @LastEditors : JackChou
  */
 import 'reflect-metadata'
@@ -10,14 +10,14 @@ import { Response, Request } from 'express'
 
 import { get, controller } from '../decorators'
 
-@controller
+@controller()
 class LoginController {
-  @get('/login')
+  @get('login')
   login(req: Request, res: Response) {
     res.json({ data: [{ name: 'jack', age: 20 }] })
   }
 
-  @get('/')
+  @get('')
   home(req: Request, res: Response) {
     const html = `<html>
     <body>
