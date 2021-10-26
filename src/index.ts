@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-25 00:04:12 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-26 22:00:30 +0800
+ * @LastEditTime: 2021-10-26 23:42:51 +0800
  * @LastEditors : JackChou
  */
 import express, { NextFunction, Request, Response } from 'express'
@@ -12,6 +12,9 @@ const PORT = 3000
 const ONE_DAY = 1000 * 60 * 60 * 24
 
 const app = express()
+// application/json
+app.use(express.json())
+// x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }))
 app.use((req: Request, res, next: NextFunction) => {
   // TODO 类型融合
