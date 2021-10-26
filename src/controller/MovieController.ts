@@ -2,13 +2,13 @@
  * @Description :
  * @Date        : 2021-10-26 22:51:06 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-26 23:50:21 +0800
+ * @LastEditTime: 2021-10-27 00:23:20 +0800
  * @LastEditors : JackChou
  */
 import path from 'path'
 import fs from 'fs'
-import { Request, Response } from 'express'
-import { controller, get, post } from './decorator'
+import { NextFunction, Request, Response } from 'express'
+import { controller, get, post, use } from './decorator'
 import { Movie } from '../types'
 
 @controller
@@ -41,15 +41,29 @@ class MovieController {
   }
 
   @post('/movie')
+  @use(useCheckLogin)
   createMovie(req: BodyRequest<Movie>, res: Response) {
     const { body } = req
     console.log(body)
-
     return res.json({ success: true, id: '121020' })
   }
 }
 
 export default MovieController
+
+/**
+ * @description: 检查登录
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
+function useCheckLogin(req: Request, res: Response, next: NextFunction) {
+  console.log(req.session)
+  // @ts-ignore
+  const hasLogin = !!req.session!.login
+  next()
+  // hasLogin ? next() : res.sendStatus(401)
+}
 
 function filterData<K extends keyof Movie>(keys: K[], data: Movie[], query: Record<string, unknown>): Movie[] {
   return data.filter(item => {

@@ -2,10 +2,10 @@
  * @Description :
  * @Date        : 2021-10-26 21:36:17 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-26 23:34:11 +0800
+ * @LastEditTime: 2021-10-27 00:09:04 +0800
  * @LastEditors : JackChou
  */
-import { Router } from 'express'
+import { Router, RequestHandler } from 'express'
 import { isFunction } from '../../utils'
 // FIXME 编译后无法识别路径别名
 // import { isFunction } from '@utils/index'
@@ -22,12 +22,15 @@ export function controller(constructor: any) {
   Object.keys(prototype).forEach(key => {
     const path = Reflect.getMetadata('path', prototype, key)
     const method: Method = Reflect.getMetadata('method', prototype, key)
+    const middleware = Reflect.getMetadata('middleware', prototype, key)
     console.log(path)
     console.log(method)
     const handler = prototype[key]
-    if (path && method && isFunction(handler)) {
+    if (middleware && path && method && isFunction(handler)) {
       // NOTE 将 method 声明为 Method 类型，不再报错
       // WHY
+      router[method](path, middleware, handler)
+    } else {
       router[method](path, handler)
     }
   })
@@ -38,6 +41,12 @@ export function controller(constructor: any) {
   //     router.get(path, prototype[key])
   //   }
   // }
+}
+
+export function use(middleware: RequestHandler) {
+  return function (constructor: any, methodName: string, descriptor: PropertyDescriptor) {
+    Reflect.defineMetadata('middleware', middleware, constructor, methodName)
+  }
 }
 
 export function get(path: string) {
