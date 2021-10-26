@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-25 00:30:58 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-25 03:47:17 +0800
+ * @LastEditTime: 2021-10-26 21:53:54 +0800
  * @LastEditors : JackChou
  */
 import { Router, Request, Response } from 'express'
@@ -16,6 +16,7 @@ import { Movie } from '../types'
 // }
 
 // TODO 扩展 声明文件
+/*
 interface RequestWithBody extends Request {
   body: {
     [key: string]: unknown
@@ -86,3 +87,4 @@ function filterData<K extends keyof Movie>(keys: K[], data: Movie[], query: Reco
   })
 }
 export default router
+*/
