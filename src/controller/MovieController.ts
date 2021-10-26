@@ -2,13 +2,13 @@
  * @Description :
  * @Date        : 2021-10-26 22:51:06 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-26 23:02:02 +0800
+ * @LastEditTime: 2021-10-26 23:50:21 +0800
  * @LastEditors : JackChou
  */
 import path from 'path'
 import fs from 'fs'
 import { Request, Response } from 'express'
-import { controller, get } from './decorator'
+import { controller, get, post } from './decorator'
 import { Movie } from '../types'
 
 @controller
@@ -38,6 +38,14 @@ class MovieController {
     } else {
       res.send([])
     }
+  }
+
+  @post('/movie')
+  createMovie(req: BodyRequest<Movie>, res: Response) {
+    const { body } = req
+    console.log(body)
+
+    return res.json({ success: true, id: '121020' })
   }
 }
 
