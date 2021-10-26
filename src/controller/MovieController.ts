@@ -2,13 +2,13 @@
  * @Description :
  * @Date        : 2021-10-26 22:51:06 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-27 00:23:20 +0800
+ * @LastEditTime: 2021-10-27 00:27:48 +0800
  * @LastEditors : JackChou
  */
 import path from 'path'
 import fs from 'fs'
 import { NextFunction, Request, Response } from 'express'
-import { controller, get, post, use } from './decorator'
+import { controller, get, post, use } from '../decorator'
 import { Movie } from '../types'
 
 @controller
@@ -42,6 +42,7 @@ class MovieController {
 
   @post('/movie')
   @use(useCheckLogin)
+  @use(useTest)
   createMovie(req: BodyRequest<Movie>, res: Response) {
     const { body } = req
     console.log(body)
@@ -63,6 +64,11 @@ function useCheckLogin(req: Request, res: Response, next: NextFunction) {
   const hasLogin = !!req.session!.login
   next()
   // hasLogin ? next() : res.sendStatus(401)
+}
+
+function useTest(req: Request, res: Response, next: NextFunction) {
+  console.log('middleware')
+  next()
 }
 
 function filterData<K extends keyof Movie>(keys: K[], data: Movie[], query: Record<string, unknown>): Movie[] {

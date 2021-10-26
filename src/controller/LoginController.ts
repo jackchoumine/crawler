@@ -8,7 +8,7 @@
 import 'reflect-metadata'
 import { Response, Request } from 'express'
 
-import { get, controller } from './decorator'
+import { get, controller } from '../decorator'
 
 @controller
 class LoginController {
