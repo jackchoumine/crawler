@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-26 21:36:17 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-26 22:45:27 +0800
+ * @LastEditTime: 2021-10-26 22:59:27 +0800
  * @LastEditors : JackChou
  */
 import { Router } from 'express'
@@ -16,6 +16,7 @@ export function controller(constructor: any) {
 
   Object.keys(prototype).forEach(key => {
     const path = Reflect.getMetadata('path', prototype, key)
+    console.log(path)
     const handler = prototype[key]
     // if (path && method && handler) {
     if (path && isFunction(handler)) {
