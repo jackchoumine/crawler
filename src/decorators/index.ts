@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-26 21:36:17 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-27 01:23:12 +0800
+ * @LastEditTime: 2021-10-27 01:26:54 +0800
  * @LastEditors : JackChou
  */
 import { RequestHandler } from 'express'
@@ -17,13 +17,13 @@ enum Method {
   get = 'get',
   post = 'post',
 }
-export function controller(prefixPath: string = '') {
+export function controller(root: string = '') {
   return function (constructor: Controller) {
     const prototype = constructor.prototype
 
     Object.keys(prototype).forEach(key => {
       const path: string = Reflect.getMetadata('path', prototype, key)
-      const _path = `${prefixPath}${path}`
+      const _path = `${root}${path}`
       const method: Method = Reflect.getMetadata('method', prototype, key)
       const middleware: RequestHandler | undefined = Reflect.getMetadata('middleware', prototype, key)
       console.log(_path)
