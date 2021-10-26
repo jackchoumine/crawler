@@ -2,10 +2,10 @@
  * @Description :
  * @Date        : 2021-10-26 21:36:17 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-27 00:32:04 +0800
+ * @LastEditTime: 2021-10-27 00:43:45 +0800
  * @LastEditors : JackChou
  */
-import { Router, RequestHandler } from 'express'
+import { RequestHandler } from 'express'
 import { isFunction } from '../utils'
 // FIXME 编译后无法识别路径别名
 // import { isFunction } from '@utils/index'

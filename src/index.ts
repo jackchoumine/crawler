@@ -8,7 +8,7 @@
 import express, { NextFunction, Request, Response } from 'express'
 // import cookieSession from 'cookie-session'
 import session from 'express-session'
-import './controller'
+import './controllers'
 import router from './route'
 
 const PORT = 3000

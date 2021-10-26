@@ -8,7 +8,7 @@
 import path from 'path'
 import fs from 'fs'
 import { NextFunction, Request, Response } from 'express'
-import { controller, get, post, use } from '../decorator'
+import { controller, get, post, use } from '../decorators'
 import { Movie } from '../types'
 
 @controller
