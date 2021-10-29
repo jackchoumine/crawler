@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-29 21:08:03 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-29 22:38:57 +0800
+ * @LastEditTime: 2021-10-29 22:52:33 +0800
  * @LastEditors : JackChou
  */
 import { Request, Response } from 'express'
@@ -45,7 +45,11 @@ class ProductController {
       }
     } else {
       const products = await prisma.product.findMany({
-        where: {
+        include: {
+          reviews: true,
+          // where: {
+          // }
+          // reviews: true,
           // name: { equals: 'Shoe' },
           // name: { contains: 'mac' },
           // price: {
