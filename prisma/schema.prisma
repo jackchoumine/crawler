@@ -20,7 +20,7 @@ model Product {
 
 model Review {
   id        String  @id @default(cuid())
-  conent    String
+  content   String
   rate      Int
   productId String
   product   Product @relation(fields: [productId], references: [id])

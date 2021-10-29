@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-29 21:08:03 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-29 23:25:29 +0800
+ * @LastEditTime: 2021-10-29 23:32:48 +0800
  * @LastEditors : JackChou
  */
 import { Request, Response } from 'express'
@@ -51,7 +51,7 @@ class ProductController {
           // reviews: true,// 包含reviews
           reviews: {
             select: {
-              conent: true,
+              content: true,
               rate: true,
             },
           },
