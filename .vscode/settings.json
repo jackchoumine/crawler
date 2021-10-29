@@ -1,7 +1,9 @@
 {
   "cSpell.words": [
     "concurrenty",
+    "middlewares",
     "nowplaying",
+    "resave",
     "votecount"
   ],
   "files.exclude": {
