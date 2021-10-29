@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-29 21:08:03 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-29 22:13:26 +0800
+ * @LastEditTime: 2021-10-29 22:38:57 +0800
  * @LastEditors : JackChou
  */
 import { Request, Response } from 'express'
@@ -10,10 +10,19 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-import { post, get, controller } from '../decorators'
+import { post, get, remove, patch, controller } from '../decorators'
 
 @controller('/products')
 class ProductController {
+  @post()
+  async createProduct(req: Request, res: Response) {
+    const { body } = req
+    const product = await prisma.product.create({
+      data: body,
+    })
+    res.json(product)
+  }
+
   @get('/:id?')
   async getProducts(req: Request, res: Response): Promise<any> {
     const { id } = req.params
@@ -24,7 +33,7 @@ class ProductController {
         //@ts-ignore
         const product = await prisma.product.findOne({
           where: {
-            id: { equals: id },
+            id: id,
           },
         })
         console.log(product)
@@ -39,23 +48,38 @@ class ProductController {
         where: {
           // name: { equals: 'Shoe' },
           // name: { contains: 'mac' },
-          price: {
-            gt: 100,
-            lt: 1400,
-          },
+          // price: {
+          //   gt: 100,
+          //   lt: 1400,
+          // },
         },
       })
       res.json(products)
     }
   }
 
-  @post()
-  async createProduct(req: Request, res: Response) {
+  @remove('/:id')
+  async deleteProduct(req: Request, res: Response) {
+    const result = await prisma.product.delete({
+      where: {
+        id: req.params.id,
+      },
+    })
+    console.log(result)
+    res.json({})
+  }
+
+  @patch('/:id')
+  async updateProduct(req: Request, res: Response) {
     const { body } = req
-    const product = await prisma.product.create({
+    const { id } = req.params
+    const result = await prisma.product.update({
+      where: {
+        id,
+      },
       data: body,
     })
-    res.json(product)
+    res.json({ success: true, data: result })
   }
 }
 

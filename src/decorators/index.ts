@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-26 21:36:17 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-29 22:00:27 +0800
+ * @LastEditTime: 2021-10-29 22:30:33 +0800
  * @LastEditors : JackChou
  */
 import 'reflect-metadata'
@@ -17,6 +17,9 @@ type Controller = new (...args: any[]) => unknown
 enum Method {
   get = 'get',
   post = 'post',
+  delete = 'delete',
+  put = 'put',
+  patch = 'patch',
 }
 export function controller(root: string = '') {
   return function (constructor: Controller) {
@@ -70,6 +73,9 @@ export const post = getRequestDecorator(Method.post)
 //     Reflect.defineMetadata('method', 'post', prototype, methodName)
 //   }
 // }
+export const remove = getRequestDecorator(Method.delete)
+export const put = getRequestDecorator(Method.put)
+export const patch = getRequestDecorator(Method.patch)
 
 function getRequestDecorator(method: Method) {
   return function (path = '') {
