@@ -2,9 +2,10 @@
  * @Description :
  * @Date        : 2021-10-26 21:36:17 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-27 01:47:38 +0800
+ * @LastEditTime: 2021-10-29 21:11:55 +0800
  * @LastEditors : JackChou
  */
+import 'reflect-metadata'
 import { RequestHandler } from 'express'
 import { isFunction } from '../utils'
 // FIXME 编译后无法识别路径别名

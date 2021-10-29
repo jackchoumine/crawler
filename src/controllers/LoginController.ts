@@ -2,10 +2,9 @@
  * @Description :
  * @Date        : 2021-10-26 21:11:55 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-27 01:10:50 +0800
+ * @LastEditTime: 2021-10-29 21:12:20 +0800
  * @LastEditors : JackChou
  */
-import 'reflect-metadata'
 import { Response, Request } from 'express'
 
 import { get, controller } from '../decorators'
