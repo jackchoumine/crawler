@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-26 21:36:17 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-29 21:11:55 +0800
+ * @LastEditTime: 2021-10-29 22:00:27 +0800
  * @LastEditors : JackChou
  */
 import 'reflect-metadata'
@@ -55,7 +55,7 @@ export function use(middleware: RequestHandler) {
   }
 }
 
-export function get(path: string) {
+export function get(path = '') {
   return function (prototype: any, methodName: string, descriptor: PropertyDescriptor) {
     Reflect.defineMetadata('path', path, prototype, methodName)
     Reflect.defineMetadata('method', 'get', prototype, methodName)
@@ -72,7 +72,7 @@ export const post = getRequestDecorator(Method.post)
 // }
 
 function getRequestDecorator(method: Method) {
-  return function (path: string) {
+  return function (path = '') {
     return function (prototype: any, methodName: string, descriptor: PropertyDescriptor) {
       Reflect.defineMetadata('path', path, prototype, methodName)
       Reflect.defineMetadata('method', method, prototype, methodName)
