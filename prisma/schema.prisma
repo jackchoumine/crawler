@@ -23,5 +23,5 @@ model Review {
   conent    String
   rate      Int
   productId String
-  Product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
 }
