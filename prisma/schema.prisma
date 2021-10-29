@@ -5,9 +5,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// "file:./dev.db"
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mysql"
+  url      = env("MySQL_CONNECTION_STRING")
 }
 
 model Product {
