@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-25 00:04:12 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-27 00:40:32 +0800
+ * @LastEditTime: 2021-10-31 19:21:53 +0800
  * @LastEditors : JackChou
  */
 import express, { NextFunction, Request, Response } from 'express'
@@ -35,7 +35,7 @@ app.use(
 
 app.use((req: Request, res, next: NextFunction) => {
   // TODO 类型融合
-  req.name = 'Jack'
+  // req.name = 'Jack'
   next()
 })
 
