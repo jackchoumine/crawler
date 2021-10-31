@@ -2,7 +2,7 @@
  * @Description :
  * @Date        : 2021-10-25 00:04:12 +0800
  * @Author      : JackChou
- * @LastEditTime: 2021-10-31 19:21:53 +0800
+ * @LastEditTime: 2021-10-31 21:02:26 +0800
  * @LastEditors : JackChou
  */
 import express, { NextFunction, Request, Response } from 'express'
@@ -42,5 +42,5 @@ app.use((req: Request, res, next: NextFunction) => {
 app.use(router)
 
 app.listen(PORT, () => {
-  console.log(`server is running at port ${PORT}`)
+  console.log(`koa server is running at port ${PORT}`)
 })
