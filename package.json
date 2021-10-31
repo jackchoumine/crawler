@@ -7,7 +7,7 @@
     "build": "tsc",
     "dev:build": "tsc -w",
     "dev:start": "nodemon node ./dist/index.js",
-    "dev": "nodemon --watch src/**/* -e ts,tsx --exec ts-node ./src/index.ts"
+    "dev": "tsc && concurrently npm:dev:*"
   },
   "dependencies": {
     "@prisma/client": "^3.3.0",
@@ -24,6 +24,7 @@
     "@types/express": "^4.17.13",
     "@types/express-session": "^1.17.4",
     "@types/superagent": "^4.1.13",
+    "concurrently": "^6.3.0",
     "nodemon": "^2.0.14",
     "prisma": "^3.3.0",
     "ts-node": "^10.4.0",
